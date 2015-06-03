@@ -20,6 +20,13 @@ main {
   display: flex;
   flex-flow: column;
 }
+#filter {
+  display: flex;
+  flex-flow: row;
+}
+#filterinput {
+  flex: 1;
+}
 #messages {
   flex: 1;
   display: flex;
