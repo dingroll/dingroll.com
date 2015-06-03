@@ -24,7 +24,6 @@ main {
   flex: 1;
   display: flex;
   flex-flow: column;
-  align-items: flex-start;
   justify-content: flex-end;
 }
 #entrybox {
