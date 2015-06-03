@@ -6,7 +6,7 @@ var client = {};
   var socket = new Primus();
 
   client.setAdHocFilter = function setAdHocFilter(filter) {
-    return socket.write({type:'setAdHocfilter', filter: filter});
+    return socket.write({type:'setAdHocFilter', filter: filter});
   };
 
   client.addPeripheralFilter = function addPeripheralFilter(filter) {
