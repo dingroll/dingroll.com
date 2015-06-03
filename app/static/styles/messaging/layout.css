@@ -11,8 +11,6 @@ main {
   flex: 1;
   display: flex;
   flex-flow: row;
-  justify-content: center;
-  align-items: center;
 }
 #sidebar {
   width: 220px;
@@ -21,7 +19,6 @@ main {
   flex: 1;
   display: flex;
   flex-flow: column;
-  align-items: stretch;
 }
 #messages {
   flex: 1;
@@ -33,7 +30,6 @@ main {
 #entrybox {
   display: flex;
   flex-flow: row;
-  align-items: stretch;
 }
 #msginput {
   flex: 1;
