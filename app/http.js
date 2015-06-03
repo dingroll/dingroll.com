@@ -36,3 +36,5 @@ function appCtor(cfg, pool) {
 
   return app;
 }
+
+module.exports = appCtor;
