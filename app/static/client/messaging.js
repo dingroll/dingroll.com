@@ -3,9 +3,12 @@
 var messageArea = document.getElementById('messages');
 
 client.haveMessage = function haveMessage(message){
+  var follow = messageArea.scrollHeight ==
+    messageArea.scrollTop + messageArea.clientHeight;
   var messageCard = document.createElement('div');
   messageCard.textContent = message.body;
   messageArea.appendChild(messageCard);
+  if (follow) messageArea.scrollTop = messageArea.scrollHeight;
 };
 
 var filterInput = document.getElementById('filterinput');
