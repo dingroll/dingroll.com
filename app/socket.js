@@ -19,23 +19,43 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
     });
   }
 
-  var adHocFilterCursor;
+  var adHocFilterCursor = null;
+
+  function closeAdHocFilterCursor() {
+    if (adHocFilterCursor) {
+      adHocFilterCursor.close();
+      adHocFilterCursor = null;
+    }
+  }
+
+  function setAdHocFilterCursor(cursor) {
+    return adHocFilterCursor = cursor;
+  }
 
   function setAdHocFilter(filter) {
-    if (adHocFilterCursor) adHocFilterCursor.close();
-    adHocFilterCursor = pool.runQuery(r.table('messages')
-      .filter(r.row('body').match(filter)));
-    adHocFilterCursor.each(function(err, message){
-      if (err) return reportError(err);
-      haveMessage(message);
-    }, function onFinished(){
-      adHocFilterCursor = pool.runQuery(r.table('messages')
-        .filter(r.row('body').match(filter)).changes());
-      adHocFilterCursor.each(function(err, changes){
-        if (err) return reportError(err);
-        haveMessage(changes.new_val);
+    closeAdHocFilterCursor();
+    pool.runQuery(r.table('messages')
+      .filter(r.row('body').match(filter)))
+      .then(setAdHocFilterCursor)
+      .then(function(){
+        adHocFilterCursor.each(function (err, message) {
+          if (err) return reportError(err);
+          haveMessage(message);
+        }, switchToChangefeed);
       });
-    });
+
+    function switchToChangefeed() {
+      closeAdHocFilterCursor();
+      pool.runQuery(r.table('messages')
+        .filter(r.row('body').match(filter)).changes())
+        .then(setAdHocFilterCursor)
+        .then(function(){
+          adHocFilterCursor.each(function (err, changes) {
+            if (err) return reportError(err);
+            haveMessage(changes.new_val);
+          });
+        });
+    }
   }
 
   socket.on('data', function(data){
