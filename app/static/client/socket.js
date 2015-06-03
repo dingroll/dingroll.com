@@ -20,7 +20,7 @@ var client = {};
   // receiveMessage and co. are created in messaging.js
   socket.on("data", function(data) {
     if (data.type == 'error') return console.error(data);
-    else if (data.type == 'createMessage') {
+    else if (data.type == 'haveMessage') {
       return client.haveMessage && client.haveMessage(data.message);
     } else {
       console.error('Unrecognized message type', data);
