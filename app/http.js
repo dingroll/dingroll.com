@@ -11,6 +11,8 @@ function appCtor(cfg, pool) {
   app.set('view engine', 'jade');
   app.set('views', __dirname + '/views');
   app.use(serveStatic(__dirname + '/static'));
+  app.use(serveStatic(__dirname + '/icons'));
+  app.use(serveStatic(__dirname + '/manifests'));
   app.use(session({
     store: new RedisStore({
       host: cfg.redis.hostname,
