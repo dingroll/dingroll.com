@@ -22,7 +22,7 @@ filterInput.addEventListener('input', function setAdHocFilter() {
 });
 
 msgForm.addEventListener('submit', function sendMessage(evt){
-  client.createMessage(msgInput.value);
+  client.createMessage({body: msgInput.value});
   msgInput.value = '';
   return evt.preventDefault();
 });
