@@ -1,0 +1,19 @@
+extends base
+
+append styles
+  link(rel="stylesheet", href="/styles/messaging/layout.css")
+  link(rel="stylesheet", href="/styles/messaging/style.css")
+
+block body
+  main
+    #sidebar.sidebar
+    #chat.chat
+      #filter.topper
+        input#filterinput
+      #messages
+      form#entrybox
+        input#msginput
+        button(type="submit") Send
+  script(src="/primus/primus.js")
+  script(src="/client/socket.js")
+  script(src="/client/messaging.js")

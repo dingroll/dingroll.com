@@ -1,0 +1,40 @@
+html {
+  height: 100%;
+  font-family: Open Sans, sans-serif;
+}
+body {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+main {
+  flex: 1;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+#sidebar {
+  width: 220px;
+}
+#chat {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+}
+#messages {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+#entrybox {
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+}
+#msginput {
+  flex: 1;
+}
