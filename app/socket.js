@@ -1,6 +1,10 @@
 var r = require('rethinkdb');
 
+var BACKLOG_LIMIT = 100;
+
 function socketAppCtor(cfg, pool) { return function socketApp(socket) {
+
+  var createMessage = require('./controllers/messages/create.js')(pool);
 
   // just listen for changes in sidebar filter status -
   // report every new message in active filters
@@ -34,8 +38,10 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
 
   function setAdHocFilter(filter) {
     closeAdHocFilterCursor();
-    pool.runQuery(r.table('messages')
-      .filter(r.row('body').match(filter)))
+    pool.runQuery(
+      r.table('messages').orderBy({index:r.desc('creation')})
+        .filter(r.row('body').match(filter))
+        .limit(BACKLOG_LIMIT).orderBy('creation'))
       .then(setAdHocFilterCursor)
       .then(function(){
         adHocFilterCursor.each(function (err, message) {
@@ -61,7 +67,7 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
   socket.on('data', function(data){
     if (data.type == 'error') return console.error(data);
     else if (data.type == 'createMessage') {
-      pool.runQuery(r.table('messages').insert(data.message));
+      createMessage(data.message);
     } else if (data.type == 'setAdHocFilter') {
       setAdHocFilter(data.filter);
     } else {
