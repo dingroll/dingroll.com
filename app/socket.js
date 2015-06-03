@@ -48,7 +48,8 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
           if (err) return reportError(err);
           haveMessage(message);
         }, switchToChangefeed);
-      });
+      })
+      .catch(reportError);
 
     function switchToChangefeed() {
       closeAdHocFilterCursor();
@@ -60,7 +61,8 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
             if (err) return reportError(err);
             haveMessage(changes.new_val);
           });
-        });
+        })
+        .catch(reportError);
     }
   }
 
