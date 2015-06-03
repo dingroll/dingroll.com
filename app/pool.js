@@ -35,4 +35,6 @@ module.exports = function poolCtor(cfg) {
       });
     });
   };
+
+  return pool;
 };
