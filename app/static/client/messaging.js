@@ -3,10 +3,19 @@
 var messageArea = document.getElementById('messages');
 
 client.haveMessage = function haveMessage(message){
+  var messageCard = document.createElement('div');
+  var messageBody = document.createElement('span');
+  messageBody.className = 'msg-body';
+  messageBody.textContent = message.body;
+  messageCard.appendChild(messageBody);
+  messageCard.appendChild(document.createTextNode(' '));
+  var messageScope = document.createElement('span');
+  messageScope.className = 'msg-scope';
+  messageScope.textContent = message.scope;
+  messageCard.appendChild(messageScope);
+
   var follow = messageArea.scrollHeight ==
     messageArea.scrollTop + messageArea.clientHeight;
-  var messageCard = document.createElement('div');
-  messageCard.textContent = message.body;
   messageArea.appendChild(messageCard);
   if (follow) messageArea.scrollTop = messageArea.scrollHeight;
 };
@@ -25,7 +34,10 @@ filterInput.addEventListener('input', function setAdHocFilter() {
 });
 
 msgForm.addEventListener('submit', function sendMessage(evt){
-  client.createMessage({body: msgInput.value});
+  client.createMessage({
+    body: msgInput.value,
+    scope: filterInput.value
+  });
   msgInput.value = '';
   return evt.preventDefault();
 });

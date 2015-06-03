@@ -40,7 +40,8 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
     closeAdHocFilterCursor();
     pool.runQuery(
       r.table('messages').orderBy({index:r.desc('creation')})
-        .filter(r.row('body').match(filter))
+        .filter(r.row('scope').match(filter)
+          .or(r.row('body').match(filter)))
         .limit(BACKLOG_LIMIT).orderBy('creation'))
       .then(setAdHocFilterCursor)
       .then(function(){
@@ -54,7 +55,8 @@ function socketAppCtor(cfg, pool) { return function socketApp(socket) {
     function switchToChangefeed() {
       closeAdHocFilterCursor();
       pool.runQuery(r.table('messages')
-        .filter(r.row('body').match(filter)).changes())
+        .filter(r.row('scope').match(filter)
+          .or(r.row('body').match(filter))).changes())
         .then(setAdHocFilterCursor)
         .then(function(){
           adHocFilterCursor.each(function (err, changes) {
