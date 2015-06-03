@@ -5,11 +5,6 @@ html {
 body {
   height: 100%;
   display: flex;
-  flex-flow: column;
-}
-main {
-  flex: 1;
-  display: flex;
   flex-flow: row;
 }
 #sidebar {
@@ -27,11 +22,14 @@ main {
 #filterinput {
   flex: 1;
 }
-#messages {
+#board {
   flex: 1;
   display: flex;
   flex-flow: column;
   justify-content: flex-end;
+}
+#messages {
+  overflow-y: auto;
 }
 #entrybox {
   display: flex;

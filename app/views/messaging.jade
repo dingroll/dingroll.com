@@ -5,15 +5,15 @@ append styles
   link(rel="stylesheet", href="/styles/messaging/style.css")
 
 block body
-  main
-    #sidebar.sidebar
-    #chat.chat
-      #filter.topper
-        input#filterinput
+  #sidebar.sidebar
+  #chat.chat
+    #filter.topper
+      input#filterinput
+    #board
       #messages
-      form#entrybox
-        input#msginput
-        button(type="submit") Send
+    form#entrybox
+      input#msginput
+      button(type="submit") Send
   script(src="/primus/primus.js")
   script(src="/client/socket.js")
   script(src="/client/messaging.js")
