@@ -7,6 +7,9 @@ var RedisStore = require('connect-redis')(session);
 function appCtor(cfg, pool) {
   var app = express();
 
+  // app-wide default page title
+  app.locals.title = 'DingRoll';
+
   app.set('trust proxy', true);
   app.set('view engine', 'jade');
   app.set('views', __dirname + '/views');
