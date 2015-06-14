@@ -8,7 +8,7 @@ function appCtor(cfg, pool) {
   var app = express();
 
   // app-wide default page title
-  app.locals.title = 'DingRoll';
+  app.locals.title = cfg.env.APP_NAME || 'DingRoll';
 
   app.set('trust proxy', true);
   app.set('view engine', 'jade');
